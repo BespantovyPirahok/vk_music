@@ -11,7 +11,7 @@ REQUEST_STATUS_CODE = 200
 
 vk_login = '___'  # Номер телефона указанный в настройках профиля ВК
 vk_password = '___'  # Пароль ВК
-vk_id = '____'  # Ваш id ВК (зайдя в "Моя музыка" в адресной строке браузера будет что-то вроде https://vk.com/audios1362067; 1362067 - id)
+vk_id = '____'  # id ВК (зайдя в "Моя музыка" в адресной строке браузера будет что-то вроде https://vk.com/audios1362067; 1362067 - id)
 path = r'C:\Users\Violet\Downloads\vk\\' + 'music_vk'  # Путь, где будет создана папка music_vk
 
 if not os.path.exists(path):
