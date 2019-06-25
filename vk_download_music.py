@@ -9,8 +9,7 @@ import datetime
 import os
 import os.path
 
-import requests  
-import vk_api  
+import requests 
 from vk_api import audio
 
 vk_file = 'vk_config.v2.json'
