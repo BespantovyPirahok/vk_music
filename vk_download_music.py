@@ -15,9 +15,9 @@ from vk_api import audio
 
 vk_file = 'vk_config.v2.json'
 
-vk_login = ''  # Номер телефона указанный в настройках профиля ВК
-vk_password = ''  # Пароль ВК
-vk_id = ''  # id ВК
+vk_login = input('Введите номер телефона: ')  # Номер телефона указанный в настройках профиля ВК
+vk_password = input('Введите пароль: ')  # Пароль ВК
+vk_id = input('Введите id: ')  # id ВК
 path = r'C:\Users\%user%\Downloads\\' + 'music_vk'  # Путь где будет создана папка music_vk
 
 if not os.path.exists(path):
