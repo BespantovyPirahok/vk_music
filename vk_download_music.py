@@ -67,6 +67,7 @@ def main():
     time_end = datetime.datetime.now()
     print('Загружено', len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))]),
           'песен за', (time_end - time_start))
+    input('Нажмите ENTER для выхода')
 
 
 if __name__ == '__main__':
