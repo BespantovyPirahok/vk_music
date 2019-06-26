@@ -18,7 +18,8 @@ vk_file = 'vk_config.v2.json'
 vk_login = input('Введите номер телефона: ')  # Номер телефона указанный в настройках профиля ВК
 vk_password = input('Введите пароль: ')  # Пароль ВК
 vk_id = input('Введите id: ')  # id ВК
-path = r'C:\Users\%user%\Downloads\\' + 'music_vk'  # Путь где будет создана папка music_vk
+path = os.path.expanduser(r'~\Downloads') + r'\music_vk'  # Путь где будет создана папка music_vk
+print('Путь загрузки', path)
 
 if not os.path.exists(path):
     os.makedirs(path)
