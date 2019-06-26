@@ -21,6 +21,7 @@ vk_id = input('Введите id: ')  # id ВК
 path = os.path.expanduser(r'~\Downloads') + r'\music_vk'  # Путь где будет создана папка music_vk
 print('Путь загрузки', path)
 
+# Если папки нет - создаём
 if not os.path.exists(path):
     os.makedirs(path)
 
@@ -65,8 +66,7 @@ def main():
         except OSError:
             print('Ошибка загрузки: песня №', a, i['artist'] + ' - ' + i['title'])
     time_end = datetime.datetime.now()
-    print('Загружено', len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))]),
-          'песен за', (time_end - time_start))
+    print('Загружено', len(next(os.walk(path))[2]), 'песен за', (time_end - time_start))
     input('Нажмите ENTER для выхода')
 
 
