@@ -13,6 +13,7 @@ import requests
 import vk_api
 from vk_api import audio
 
+import getpass
 from tqdm import tqdm
 
 
@@ -21,7 +22,7 @@ def auth(vk_login=None, vk_password=None, vk_id=None):
     if not vk_login:
         vk_login = input('Введите телефон или email: ')
     if not vk_password:
-        vk_password = input('Введите пароль: ')
+        vk_password = getpass.getpass('Введите пароль: ')
     if not vk_id:
         vk_id = input('Введите id: ')
     return vk_login, vk_password, vk_id
