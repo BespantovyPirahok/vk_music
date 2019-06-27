@@ -53,18 +53,19 @@ def main():
         except OSError:
             with open(i['artist'] + ' - ' + i['title'] + '.mp3', 'wb') as output_file:
                 output_file.write(r.content)
-    a = 0
+    song_number = 0
     time_start = datetime.datetime.now()
     print('Начало загрузки', datetime.datetime.now().strftime('%H:%M:%S %d-%m-%Y'))
     for i in vk_audio.get(owner_id=vk_id):
         try:
-            a += 1
+            song_number += 1
             r = requests.get(i['url'])
             if r.status_code == 200:
                 with open(i['artist'] + ' - ' + i['title'] + '.mp3', 'wb') as output_file:
                     output_file.write(r.content)
+                    print('Загрузка:', i['artist'] + ' - ' + i['title'])
         except OSError:
-            print('Ошибка загрузки: песня №', a, i['artist'] + ' - ' + i['title'])
+            print('Ошибка загрузки: песня №', song_number, i['artist'] + ' - ' + i['title'])
     time_end = datetime.datetime.now()
     print('Загружено', len(next(os.walk(path))[2]), 'песен за', (time_end - time_start))
     input('Нажмите ENTER для выхода')
