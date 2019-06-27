@@ -17,7 +17,6 @@ from tqdm import tqdm
 
 vk_file = 'vk_config.v2.json'
 
-
 path = os.path.expanduser(r'~\Downloads') + r'\music_vk'
 print('Путь загрузки:', path)
 
