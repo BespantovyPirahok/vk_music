@@ -62,7 +62,7 @@ def main():
                             output_file.write(r.content)
                             print('Загрузка:', i['artist'] + ' - ' + i['title'])
                 except OSError:
-                    print('Ошибка загрузки: песня №', song, i['artist'] + ' - ' + i['title'])
+                    print('Ошибка загрузки:', song, i['artist'] + ' - ' + i['title'])
             time_end = datetime.datetime.now()
             print('Загружено', len(next(os.walk(path))[2]), 'песен за', (time_end - time_start))
             input('Нажмите ENTER для выхода')
