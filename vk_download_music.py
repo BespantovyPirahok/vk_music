@@ -13,6 +13,8 @@ import requests
 import vk_api
 from vk_api import audio
 
+from tqdm import tqdm
+
 vk_file = 'vk_config.v2.json'
 
 vk_login = input('Введите номер телефона: ')  # Номер телефона указанный в настройках профиля ВК
@@ -48,7 +50,7 @@ def main():
     r = requests.get(i['url'])
     print(r)  # <Response [200]>
 
-    if r.status_code == 200:
+        if r.status_code == 200:
         try:
             song = 0
             time_start = datetime.datetime.now()
@@ -56,11 +58,13 @@ def main():
             for i in vk_audio.get(owner_id=vk_id):
                 try:
                     song += 1
-                    r = requests.get(i['url'])
+                    r = requests.get(i['url'], stream=True)
+                    size = int(r.headers['content-length'])
                     if r.status_code == 200:
                         with open(str(song) + '_' + i['artist'] + ' - ' + i['title'] + '.mp3', 'wb') as output_file:
-                            output_file.write(r.content)
                             print('Загрузка:', i['artist'] + ' - ' + i['title'])
+                            for data in tqdm(iterable=r.iter_content(chunk_size=1024), total=size/1024, unit='KB'):
+                                output_file.write(data)
                 except OSError:
                     print('Ошибка загрузки:', song, i['artist'] + ' - ' + i['title'])
             time_end = datetime.datetime.now()
