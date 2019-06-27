@@ -4,6 +4,7 @@
 # pip install request
 # pip install vk_api
 # pip install BeautifulSoup4
+# pip install tqdm
 
 import datetime
 import os
