@@ -91,8 +91,7 @@ def main(vk_login=None, vk_password=None):
             print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
             download(v_id)
 
-        def friends_music_1(bb):
-            v_id = bb
+        def friends_music_1(v_id):
             v_id_f = vk.users.get(user_ids=v_id)
             print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
             download(v_id)
@@ -105,11 +104,16 @@ def main(vk_login=None, vk_password=None):
             qq = input('1 - Выбрать из списка друзей; 2 - ввести id: ')
             if qq == '1':
                 count_f = vk.friends.get(order='name')
-                print('Всего друзей:', count_f['count'])
-                for aa in range(2):
+                print('Друзей:', count_f['count'])
+                data = {}
+                for aa in range(0, int(count_f['count'])):
                     user = vk.friends.get(fields='first_name,last_name')['items'][aa]
                     print(aa, user['id'], user['first_name'], user['last_name'])
-
+                    k = str(aa)
+                    data[k] = user['id']
+                b = input('Введите номер друга: ')
+                v_id = data[b]
+                friends_music_1(v_id)
             elif qq == '2':
                 try:
                     friend_music()
