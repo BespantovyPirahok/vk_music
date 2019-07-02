@@ -24,6 +24,7 @@ def auth(vk_login=None, vk_password=None):
     if not vk_login:
         vk_login = input('Введите телефон или email: ')
     if not vk_password:
+        # vk_password = getpass.getpass('Введите пароль: ')
         vk_password = input('Введите пароль: ')
     return vk_login, vk_password
 
@@ -85,41 +86,39 @@ def main(vk_login=None, vk_password=None):
             print('Анализ музыки', vk.users.get()[0]['first_name'] + ' ' + vk.users.get()[0]['last_name'])
             download(v_id)
 
-        def friend_music():
-            v_id = input('Введите id или короткое имя: ')
+        def friends_music(v_id):
             v_id_f = vk.users.get(user_ids=v_id)
             print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
             download(v_id)
 
-        def friends_music_1(v_id):
-            v_id_f = vk.users.get(user_ids=v_id)
-            print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
-            download(v_id)
+        question = input('Загрузить свою музыку?\ny/n: ')
 
-        q = input('Загрузить свою музыку? y/n ')
-        if q == 'y':
+        if question == 'y':
             own_music()
-        elif q == 'n':
-            import json
-            qq = input('1 - Выбрать из списка друзей; 2 - ввести id: ')
-            if qq == '1':
-                count_f = vk.friends.get(order='name')
-                print('Друзей:', count_f['count'])
-                data = {}
-                for aa in range(0, int(count_f['count'])):
-                    user = vk.friends.get(fields='first_name,last_name')['items'][aa]
-                    print(aa, user['id'], user['first_name'], user['last_name'])
-                    k = str(aa)
-                    data[k] = user['id']
+
+        elif question == 'n':
+            question_1 = input('1 Выбрать друга\n2 Ввести id\nСделайте выбор: ')
+
+            if question_1 == '1':
+                number_of_friends = vk.friends.get(order='name')
+                print('Друзей:', number_of_friends['count'])
+                dictionary_friends = {}
+
+                for num in range(0, int(number_of_friends['count'])):
+                    user = vk.friends.get(fields='first_name,last_name')['items'][num]
+                    print(num, user['first_name'], user['last_name'])
+                    k = str(num)
+                    dictionary_friends[k] = user['id']
                 b = input('Введите номер друга: ')
-                v_id = data[b]
-                friends_music_1(v_id)
-            elif qq == '2':
+                friends_music(v_id=dictionary_friends[b])
+
+            elif question_1 == '2':
                 try:
-                    friend_music()
+                    friends_music(v_id=input('Введите id: '))
                 except vk_api.exceptions.AccessDenied:
                     print('У Вас нет прав для просмотра аудио пользователя')
-                    friend_music()
+                    friends_music(v_id=input('Введите id: '))
+
     except vk_api.AuthError:
         print('Неверный пароль')
         main(vk_login=vk_login)
