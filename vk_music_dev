@@ -17,14 +17,17 @@ from vk_api import audio
 
 import getpass
 from tqdm import tqdm
+import sys
+
+
+print('VK music download [Version 1.4.0]\nviolet1one, 2019\n')
 
 
 # Авторизация
-def auth(vk_login=None, vk_password=None):
-    if not vk_login:
-        vk_login = input('Введите телефон или email: ')
-    if not vk_password:
-        vk_password = getpass.getpass('Введите пароль: ')
+def auth():
+    vk_login = input('Введите телефон или email: ')
+    vk_password = getpass.getpass('Введите пароль: ')
+    # vk_password = input('Введите пароль: ')
     return vk_login, vk_password
 
 
@@ -55,6 +58,7 @@ def main():
         vk_audio = audio.VkAudio(vk_session)
         print('Успех')
 
+        # Загрузка
         def download(v_id):
             path = folder()
             os.chdir(path)
@@ -78,27 +82,37 @@ def main():
                     print('Ошибка загрузки:', song, i['artist'] + ' - ' + i['title'])
             time_end = datetime.datetime.now()
             print('Загружено', len(next(os.walk(path))[2]), 'песен за', (time_end - time_start))
-            input('Нажмите ENTER для выхода')
 
+            question = input('Выйти или продолжить?\nq/c: ')
+
+            if question == 'q':
+                print('Завершение..')
+                sys.exit(0)
+
+            elif question == 'c':
+                main()
+
+        # Загрузка своей музыки
         def own_music():
             v_id = vk.users.get()[0]['id']
             print('Анализ музыки', vk.users.get()[0]['first_name'] + ' ' + vk.users.get()[0]['last_name'])
             download(v_id)
 
+        # Загрузка музыки друзей
         def friends_music(v_id):
             v_id_f = vk.users.get(user_ids=v_id)
             print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
             download(v_id)
 
-        question = input('Загрузить свою музыку?\ny/n: ')
+        question_1 = input('Загрузить свою музыку?\ny/n: ')
 
-        if question == 'y':
+        if question_1 == 'y':
             own_music()
 
-        elif question == 'n':
-            question_1 = input('1 Выбрать друга\n2 Ввести id\nСделайте выбор: ')
+        elif question_1 == 'n':
+            question_2 = input('1 Выбрать друга\n2 Ввести id\nСделайте выбор: ')
 
-            if question_1 == '1':
+            if question_2 == '1':
                 number_of_friends = vk.friends.get(order='name')
                 print('Друзей:', number_of_friends['count'])
                 dictionary_friends = {}
@@ -111,7 +125,7 @@ def main():
                 b = input('Введите номер друга: ')
                 friends_music(v_id=dictionary_friends[b])
 
-            elif question_1 == '2':
+            elif question_2 == '2':
                 try:
                     friends_music(v_id=input('Введите id: '))
                 except vk_api.exceptions.AccessDenied:
