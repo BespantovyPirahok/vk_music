@@ -114,7 +114,6 @@ def main(vk_login=None, vk_password=None):
 
             elif question_1 == '2':
                 try:
-
                     friends_music(v_id=input('Введите id: '))
                 except vk_api.exceptions.AccessDenied:
                     print('У Вас нет прав для просмотра аудио пользователя')
