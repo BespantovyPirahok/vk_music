@@ -44,16 +44,16 @@ def folder():
     return path
 
 
-def main(vk_login=None, vk_password=None):
-    vk_login, vk_password = auth(vk_login=vk_login, vk_password=vk_password)
-    vk_session = vk_api.VkApi(login=vk_login, password=vk_password, auth_handler=two_step_auth)
-
-    vk_session.auth()
-    print('Авторизация')
-    vk = vk_session.get_api()
-    vk_audio = audio.VkAudio(vk_session)
+def main():
+    vk_login, vk_password = auth()
 
     try:
+        vk_session = vk_api.VkApi(login=vk_login, password=vk_password, auth_handler=two_step_auth)
+
+        vk_session.auth()
+        print('Авторизация')
+        vk = vk_session.get_api()
+        vk_audio = audio.VkAudio(vk_session)
         print('Успех')
 
         def download(v_id):
@@ -120,12 +120,8 @@ def main(vk_login=None, vk_password=None):
                     friends_music(v_id=input('Введите id: '))
 
     except vk_api.AuthError:
-        print('Неверный пароль')
-        main(vk_login=vk_login)
-
-    except vk_api.exceptions.Captcha:
-        print('Неверный логин')
-        main(vk_password=vk_password)
+        print('Неверный логин или пароль')
+        main()
 
 
 if __name__ == '__main__':
