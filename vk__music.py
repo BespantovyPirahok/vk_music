@@ -86,13 +86,7 @@ def main(vk_login=None, vk_password=None):
             print('Анализ музыки', vk.users.get()[0]['first_name'] + ' ' + vk.users.get()[0]['last_name'])
             download(v_id)
 
-        def friend_music():
-            v_id = input('Введите id: ')  # или короткое имя
-            v_id_f = vk.users.get(user_ids=v_id)
-            print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
-            download(v_id)
-
-        def friends_music_1(v_id):
+        def friends_music(v_id):
             v_id_f = vk.users.get(user_ids=v_id)
             print('Анализ музыки', v_id_f[0]['first_name'] + ' ' + v_id_f[0]['last_name'])
             download(v_id)
@@ -116,14 +110,15 @@ def main(vk_login=None, vk_password=None):
                     k = str(num)
                     dictionary_friends[k] = user['id']
                 b = input('Введите номер друга: ')
-                friends_music_1(v_id=dictionary_friends[b])
+                friends_music(v_id=dictionary_friends[b])
 
             elif question_1 == '2':
                 try:
-                    friend_music()
+
+                    friends_music(v_id=input('Введите id: '))
                 except vk_api.exceptions.AccessDenied:
                     print('У Вас нет прав для просмотра аудио пользователя')
-                    friend_music()
+                    friends_music(v_id=input('Введите id: '))
 
     except vk_api.AuthError:
         print('Неверный пароль')
