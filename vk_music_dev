@@ -24,8 +24,7 @@ def auth(vk_login=None, vk_password=None):
     if not vk_login:
         vk_login = input('Введите телефон или email: ')
     if not vk_password:
-        # vk_password = getpass.getpass('Введите пароль: ')
-        vk_password = input('Введите пароль: ')
+        vk_password = getpass.getpass('Введите пароль: ')
     return vk_login, vk_password
 
 
