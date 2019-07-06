@@ -122,8 +122,11 @@ def main():
                     print(num, user['first_name'], user['last_name'])
                     k = str(num)
                     dictionary_friends[k] = user['id']
-                b = input('Введите номер друга: ')
-                friends_music(v_id=dictionary_friends[b])
+                try:
+                    b = input('Введите номер друга: ')
+                    friends_music(v_id=dictionary_friends[b])
+                except vk_api.exceptions.AccessDenied:
+                    print('У Вас нет прав для просмотра аудио пользователя')
 
             elif question_2 == '2':
                 try:
