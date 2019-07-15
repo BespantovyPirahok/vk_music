@@ -20,9 +20,6 @@ from tqdm import tqdm
 import sys
 
 
-print('VK music download [Version 1.4.0]\nviolet1one, 2019\n')
-
-
 # Авторизация
 def auth():
     vk_login = input('Введите телефон или email: ')
